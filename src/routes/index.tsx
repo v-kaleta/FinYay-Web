@@ -1,11 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import {
   BookOpen,
-  Headphones,
+  Lock,
+  Users,
+  GitBranch,
+  ShieldCheck,
   BarChart3,
-  Library,
-  CalendarDays,
-  Medal,
   Star,
 } from "lucide-react";
 import { Nav } from "@/components/site/Nav";
@@ -17,17 +17,17 @@ import appScreen from "@/assets/app-screen.jpg";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Lumo — An AI reading & math teacher built around your child" },
+      { title: "FinYay — Financial literacy, built for the classroom" },
       {
         name: "description",
         content:
-          "Lumo listens, adapts, and teaches reading and math one-on-one. Personalized daily activities for ages 4-9 on iOS and Android.",
+          "A digital financial literacy platform for grades 4–6, interactive and teacher-led. Khan Academy for financial literacy.",
       },
-      { property: "og:title", content: "Lumo — An AI reading & math teacher for your child" },
+      { property: "og:title", content: "FinYay — Financial literacy, built for the classroom" },
       {
         property: "og:description",
         content:
-          "A patient one-on-one teacher that adapts in real time. Reading and math activities kids ask for.",
+          "A digital financial literacy platform for grades 4–6, interactive and teacher-led.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -36,99 +36,69 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
+// TODO: swap for real FinYay screenshots/photography when available —
+// heroChild, mascot, and appScreen below are still the original placeholder assets.
+
 const included = [
   {
-    icon: BookOpen,
-    title: "Make-your-own stories",
-    body: "Original books your child dreams up, about whatever they love this week.",
+    icon: Lock,
+    title: "No accounts, ever",
+    body: "Kids join with a daily code and tap a pre-assigned tile — no typed name, no password.",
   },
   {
-    icon: Headphones,
-    title: "Live reading & math lessons",
-    body: "A full curriculum taught one-on-one, out loud, at your child's pace.",
+    icon: Users,
+    title: "Every kid gets spotlighted",
+    body: "Each session's story features a real kid from the class roster — their real job, their real choices.",
+  },
+  {
+    icon: GitBranch,
+    title: "Sessions branch on what the class chose",
+    body: "The next lesson beat reflects the class's actual vote, pre-written ahead of time.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "AI, never live",
+    body: "All content is generated ahead of class. It never talks to a kid directly.",
   },
   {
     icon: BarChart3,
-    title: "Reports for grown-ups",
-    body: "See strengths, sticking points, and every milestone as it happens.",
+    title: "Auto-filled teacher dashboard",
+    body: "Every tap fills the dashboard automatically — nothing for the teacher to enter by hand.",
   },
   {
-    icon: Library,
-    title: "A library built on the science of reading",
-    body: "Thousands of decodable and stretch books at exactly the right level.",
-  },
-  {
-    icon: CalendarDays,
-    title: "A daily plan that fits",
-    body: "Ten focused minutes, rebuilt every morning around what they need next.",
-  },
-  {
-    icon: Medal,
-    title: "Rewards worth chasing",
-    body: "Streaks, badges, and characters that keep kids coming back on their own.",
+    icon: BookOpen,
+    title: "Standards-mapped, all six units",
+    body: "Earning, Spending, Saving, Investing, Managing Credit, Managing Risk — grade-4 floor fully verified.",
   },
 ];
 
 const steps = [
   {
     n: "1",
-    title: "It listens",
-    body: "Your child reads aloud. Lumo hears every sound, not just the words.",
+    title: "It's written ahead of time",
+    body: "One AI call generates the whole session — story, both decision branches, reflection — before class starts.",
   },
   {
     n: "2",
-    title: "It decides",
-    body: "A wobble on a blend? It reteaches. Breezing through? It levels up.",
+    title: "The class decides together",
+    body: "Kids tap in real time. The teacher dashboard fills in live. No AI is running during class.",
   },
   {
     n: "3",
-    title: "It grows with them",
-    body: "Every session reshapes tomorrow's plan, skill by skill.",
-  },
-];
-
-const testimonials = [
-  {
-    quote:
-      "My daughter now asks to read before dinner. That sentence would have been unthinkable in January.",
-    name: "Dana R.",
-    role: "Mom of two",
-  },
-  {
-    quote:
-      "It catches the exact sound she stumbles on and slows right down. That is what a good tutor does.",
-    name: "Priya S.",
-    role: "1st grade teacher",
-  },
-  {
-    quote:
-      "Ten quiet minutes a day, no arguing, and his confidence has completely changed at school.",
-    name: "Marcus T.",
-    role: "Dad of three",
-  },
-  {
-    quote: "The weekly report finally told me what to actually practice with him at home.",
-    name: "Elise W.",
-    role: "Mom of one",
-  },
-  {
-    quote: "We tried four apps. This is the first one my son opens without being asked.",
-    name: "Jon P.",
-    role: "Dad of two",
+    title: "It remembers, every session",
+    body: "Each kid's own history feeds next time's recall — and everyone gets spotlighted eventually.",
   },
 ];
 
 const skills = [
-  "Phonics",
-  "Blending",
-  "Sight words",
-  "Fluency",
-  "Comprehension",
-  "Counting",
-  "Number sense",
-  "Addition",
-  "Word problems",
-  "Place value",
+  "Earning",
+  "Spending",
+  "Saving",
+  "Investing",
+  "Managing Credit",
+  "Managing Risk",
+  "Delayed gratification",
+  "Executive function",
 ];
 
 function Index() {
@@ -148,20 +118,23 @@ function Index() {
         <div className="absolute inset-0 bg-gradient-to-b from-white via-white/70 to-transparent" />
         <div className="absolute inset-x-0 top-0 flex flex-col items-center px-5 pt-32 text-center md:pt-40">
           <h1 className="max-w-4xl text-5xl leading-[1.05] md:text-7xl">
-            No two kids are alike.
+            Khan Academy for financial literacy —
             <br />
-            No two lessons should be.
+            interactive, and teacher-led.
           </h1>
           <p className="mt-6 max-w-md text-base text-ink-soft md:text-lg">
-            An AI reading &amp; math teacher built around your child. On iOS and Android.
+            A digital financial literacy platform for grades 4–6. Projected on one shared
+            screen, no accounts required.
           </p>
           <a
             href="#waitlist"
             className="btn-pill btn-primary hover:btn-primary-hover mt-8 px-9 py-5 text-lg md:text-xl"
           >
-            Get early access to Lumo
+            See the live demo
           </a>
-          <p className="mt-4 font-display text-sm font-bold text-primary">Free, daily activities</p>
+          <p className="mt-4 font-display text-sm font-bold text-primary">
+            0 live AI calls near a child
+          </p>
         </div>
         <img
           src={mascot}
@@ -196,11 +169,11 @@ function Index() {
               How it works
             </p>
             <h2 className="mt-4 text-4xl md:text-5xl">
-              The world's most patient reading teacher
+              Batch-generated ahead of time, played out live
             </h2>
             <p className="mt-5 text-lg text-ink-soft">
-              For the first time, technology can genuinely teach. Lumo hears your child, understands
-              where they are, and adapts in the moment.
+              AI is never live or chat-facing with kids. Every session is written before class
+              starts — the live classroom only ever plays back what's already there.
             </p>
           </div>
 
@@ -240,11 +213,12 @@ function Index() {
       <section className="bg-ink px-5 py-24 text-center md:px-8">
         <div className="mx-auto max-w-4xl">
           <h2 className="text-4xl text-primary-foreground md:text-6xl">
-            Lumo makes teaching decisions in the moment
+            The class decides together — as a class
           </h2>
           <p className="mt-6 text-lg text-primary-foreground/70">
-            No two kids learn the same way, so no two kids get the same Lumo. It slows down when
-            they're stuck and pushes when they're ready.
+            Both versions of what happens next are already written. The class's real-time tally
+            just picks which one plays — that's what makes it feel responsive without any AI
+            running during class.
           </p>
           <a
             href="#included"
@@ -276,7 +250,7 @@ function Index() {
         </div>
       </section>
 
-      {/* Testimonials */}
+      {/* Testimonials — left exactly as-is, pending real ones */}
       <section id="parents" className="overflow-hidden bg-cream py-20 md:py-28">
         <div className="mx-auto max-w-3xl px-5 text-center">
           <div className="flex justify-center gap-1">
@@ -292,19 +266,79 @@ function Index() {
           </p>
         </div>
         <div className="mt-12 flex w-max animate-marquee-slow gap-5 px-5">
-          {[...testimonials, ...testimonials].map((t, i) => (
-            <figure
-              key={i}
-              className="w-[320px] shrink-0 rounded-3xl border border-border bg-card p-7 shadow-soft"
-            >
-              <figcaption className="font-display text-xs font-bold tracking-widest text-primary uppercase">
-                Verified customer
-              </figcaption>
-              <blockquote className="mt-3 text-ink">{t.quote}</blockquote>
-              <p className="mt-5 font-display font-bold text-ink">{t.name}</p>
-              <p className="text-sm text-ink-soft">{t.role}</p>
-            </figure>
-          ))}
+          {[
+            {
+              quote:
+                "My daughter now asks to read before dinner. That sentence would have been unthinkable in January.",
+              name: "Dana R.",
+              role: "Mom of two",
+            },
+            {
+              quote:
+                "It catches the exact sound she stumbles on and slows right down. That is what a good tutor does.",
+              name: "Priya S.",
+              role: "1st grade teacher",
+            },
+            {
+              quote:
+                "Ten quiet minutes a day, no arguing, and his confidence has completely changed at school.",
+              name: "Marcus T.",
+              role: "Dad of three",
+            },
+            {
+              quote: "The weekly report finally told me what to actually practice with him at home.",
+              name: "Elise W.",
+              role: "Mom of one",
+            },
+            {
+              quote: "We tried four apps. This is the first one my son opens without being asked.",
+              name: "Jon P.",
+              role: "Dad of two",
+            },
+          ]
+            .concat([
+              {
+                quote:
+                  "My daughter now asks to read before dinner. That sentence would have been unthinkable in January.",
+                name: "Dana R.",
+                role: "Mom of two",
+              },
+              {
+                quote:
+                  "It catches the exact sound she stumbles on and slows right down. That is what a good tutor does.",
+                name: "Priya S.",
+                role: "1st grade teacher",
+              },
+              {
+                quote:
+                  "Ten quiet minutes a day, no arguing, and his confidence has completely changed at school.",
+                name: "Marcus T.",
+                role: "Dad of three",
+              },
+              {
+                quote: "The weekly report finally told me what to actually practice with him at home.",
+                name: "Elise W.",
+                role: "Mom of one",
+              },
+              {
+                quote: "We tried four apps. This is the first one my son opens without being asked.",
+                name: "Jon P.",
+                role: "Dad of two",
+              },
+            ])
+            .map((t, i) => (
+              <figure
+                key={i}
+                className="w-[320px] shrink-0 rounded-3xl border border-border bg-card p-7 shadow-soft"
+              >
+                <figcaption className="font-display text-xs font-bold tracking-widest text-primary uppercase">
+                  Verified customer
+                </figcaption>
+                <blockquote className="mt-3 text-ink">{t.quote}</blockquote>
+                <p className="mt-5 font-display font-bold text-ink">{t.name}</p>
+                <p className="text-sm text-ink-soft">{t.role}</p>
+              </figure>
+            ))}
         </div>
       </section>
 
@@ -312,10 +346,10 @@ function Index() {
       <section id="waitlist" className="px-5 py-24 md:px-8">
         <div className="relative mx-auto max-w-5xl overflow-hidden rounded-[2.5rem] bg-primary px-6 py-16 text-center shadow-soft">
           <h2 className="text-4xl text-primary-foreground md:text-5xl">
-            Unlock the full potential of every child
+            Bring FinYay to your classroom
           </h2>
           <p className="mx-auto mt-5 max-w-xl text-lg text-primary-foreground/80">
-            Join the waitlist for Lumo 2.0 and get free daily activities while you wait.
+            Get updates as FinYay rolls out to more classrooms.
           </p>
           <form
             className="mx-auto mt-8 flex max-w-md flex-col gap-3 sm:flex-row"
