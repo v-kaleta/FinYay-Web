@@ -250,6 +250,126 @@ function Index() {
         </div>
       </section>
 
+      {/* Activity interaction patterns */}
+      <section id="patterns" className="px-5 py-20 md:px-8 md:py-28">
+        <div className="mx-auto max-w-6xl">
+          <p className="text-center font-display text-sm font-bold tracking-widest text-primary uppercase">
+            Activity interaction patterns
+          </p>
+          <h2 className="mt-4 text-center text-4xl md:text-5xl">
+            Four reusable patterns, not custom UI per worksheet
+          </h2>
+          <p className="mx-auto mt-5 max-w-2xl text-center text-lg text-ink-soft">
+            Instant right/wrong feedback is simple comparison against a pre-generated answer key —
+            not live AI, so it doesn't conflict with the no-live-AI rule.
+          </p>
+
+          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="rounded-3xl border border-border bg-card p-6 shadow-soft">
+              <p className="font-mono text-sm font-semibold text-primary">tap_to_place</p>
+              <p className="mt-2 text-sm text-ink-soft">
+                Word bank + blanks + answer key. Labeling, cloze stories, vocabulary practice.
+              </p>
+            </div>
+            <div className="rounded-3xl border border-border bg-card p-6 shadow-soft">
+              <p className="font-mono text-sm font-semibold text-primary">fill_the_structure</p>
+              <p className="mt-2 text-sm text-ink-soft">
+                A layout (table / graph) + fields + answer key. Ledgers, word problems, circle graphs.
+              </p>
+            </div>
+            <div className="rounded-3xl border border-border bg-card p-6 shadow-soft">
+              <p className="font-mono text-sm font-semibold text-primary">choose_one</p>
+              <p className="mt-2 text-sm text-ink-soft">
+                Options + a correct index, or null for a genuine trade-off. Same as decide 1/2.
+              </p>
+            </div>
+            <div className="rounded-3xl border border-border bg-card p-6 shadow-soft">
+              <p className="font-mono text-sm font-semibold text-primary">reflect</p>
+              <p className="mt-2 text-sm text-ink-soft">
+                A prompt, no structured input. Warm-up, wrap-up, real-life reflection.
+              </p>
+            </div>
+          </div>
+
+          <p className="mt-14 text-center text-sm text-ink-soft">
+            Two of these, worked through with real content:
+          </p>
+          <div className="mt-6 grid gap-5 md:grid-cols-2">
+            <div className="rounded-3xl border border-border bg-card p-7 shadow-soft">
+              <p className="font-mono text-xs font-bold uppercase tracking-widest text-primary">
+                tap_to_place · Budget Vocabulary
+              </p>
+              <div className="mt-4 flex flex-wrap gap-2">
+                {["afford", "balanced", "budget", "donation", "expense", "overspend", "portion", "prioritize"].map(
+                  (w) => (
+                    <span
+                      key={w}
+                      className="rounded-full border border-border bg-cream px-3 py-1 font-mono text-xs text-ink"
+                    >
+                      {w}
+                    </span>
+                  ),
+                )}
+              </div>
+              <p className="mt-4 text-sm text-ink">
+                "I don't want to <span className="inline-block w-20 border-b-2 border-accent align-middle" /> making
+                bracelets."
+              </p>
+              <p className="mt-2 text-sm text-ink">
+                "I've finally saved enough to buy a new book." →{" "}
+                <span className="font-mono font-semibold text-primary">afford</span>
+              </p>
+            </div>
+
+            <div className="rounded-3xl border border-border bg-card p-7 shadow-soft">
+              <p className="font-mono text-xs font-bold uppercase tracking-widest text-primary">
+                fill_the_structure · Hala's Food Plan
+              </p>
+              <div className="mt-4 flex flex-wrap items-center gap-4">
+                <div
+                  role="img"
+                  aria-label="Circle graph split evenly into proteins, fruits and vegetables, and grains"
+                  className="h-20 w-20 shrink-0 rounded-full ring-4 ring-cream"
+                  style={{
+                    background:
+                      "conic-gradient(hsl(var(--accent)) 0deg 120deg, hsl(var(--sky)) 120deg 240deg, hsl(var(--primary)) 240deg 360deg)",
+                  }}
+                />
+                <table className="min-w-[150px] flex-1 border-collapse text-sm">
+                  <thead>
+                    <tr>
+                      <th className="border-b border-border px-2 py-1 text-left font-mono text-[10px] uppercase text-ink-soft">
+                        Food group
+                      </th>
+                      <th className="border-b border-border px-2 py-1 text-left font-mono text-[10px] uppercase text-ink-soft">
+                        Cost
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td className="border-b border-border px-2 py-1">Proteins</td>
+                      <td className="border-b border-border px-2 py-1">$108</td>
+                    </tr>
+                    <tr>
+                      <td className="border-b border-border px-2 py-1">Fruits &amp; veg</td>
+                      <td className="border-b border-border px-2 py-1">?</td>
+                    </tr>
+                    <tr>
+                      <td className="px-2 py-1">Grains</td>
+                      <td className="px-2 py-1">?</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <p className="mt-4 text-sm text-ink-soft">
+                Kids fill in the blanks from the word problem — same "layout + fields + answer key"
+                shape every time, different numbers and story each session.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
       {/* Testimonials — left exactly as-is, pending real ones */}
       <section id="parents" className="overflow-hidden bg-cream py-20 md:py-28">
         <div className="mx-auto max-w-3xl px-5 text-center">
