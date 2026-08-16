@@ -1,3 +1,4 @@
+import { useState, type Dispatch, type SetStateAction } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import {
   BookOpen,
@@ -101,7 +102,81 @@ const skills = [
   "Executive function",
 ];
 
+const ROSTER = [
+  { tileId: "fox", name: "Jordan M.", career: "Realtor", icon: "🏠" },
+  { tileId: "bee", name: "Maya T.", career: "Vet", icon: "🐾" },
+  { tileId: "turtle", name: "Diego R.", career: "Farmhand", icon: "🌾" },
+  { tileId: "butterfly", name: "Amara K.", career: "Pet-sitter", icon: "🐕", spotlight: true },
+  { tileId: "bear", name: "Liam O.", career: "Firefighter", icon: "🚒" },
+  { tileId: "owl", name: "Sofia N.", career: "Tour guide", icon: "🗺️" },
+  { tileId: "dolphin", name: "Kai P.", career: "Toy-maker", icon: "🧸" },
+  { tileId: "lion", name: "Noah B.", career: "Food server", icon: "🍽️" },
+];
+const SPOTLIGHT = ROSTER.find((k) => k.spotlight)!;
+
+const DEMO_SESSION = {
+  per_tile_recall: {
+    fox: "Last time, you kept saving toward your goal instead of spending.",
+    bee: "Last time, you spent a little early — let's see how that played out.",
+    turtle: "Last time, you kept saving toward your goal instead of spending.",
+    butterfly: "Last time, you spent a little early on a new leash for your dog-walking business.",
+    bear: "Last time, you kept saving toward your goal instead of spending.",
+    owl: "Last time, you spent a little early — let's see how that played out.",
+    dolphin: "Last time, you kept saving toward your goal instead of spending.",
+    lion: "Last time, you spent a little early — let's see how that played out.",
+  } as Record<string, string>,
+  teach_1_script:
+    "Amara is walking past the pet store when she sees a flashy new leash in the window — way past what she needs, but all her friends are talking about it. Ads and friends can push us to buy things we didn't plan on, even when our old leash works fine.",
+  decide_1_labels: { buy: "Buy the flashy new leash", pass: "Pass and stick with the old one" },
+  teach_2_variants: {
+    branch_buy:
+      "Amara buys the leash. It looks great, but now she's short on cash for the dog treats she actually needed this week — a reminder that impulse buys can crowd out planned ones.",
+    branch_pass:
+      "Amara passes on the leash. Her old one still works fine, and she has the cash ready when a real need comes up later in the week.",
+  },
+  decide_2_labels: { cash: "Pay cash today", iou: "Take an IOU, pay next week" },
+  reflect_prompt: "Which would you pick, and why — cash today or an IOU next week?",
+  sample_reflection: "i wud pay cash today bc then i dont have to remember to pay it back later",
+};
+
+const BEATS = [
+  { id: "join", label: "Join" },
+  { id: "recall", label: "Recall" },
+  { id: "story", label: "Story / Teach 1" },
+  { id: "decide1", label: "Decide 1" },
+  { id: "teach2", label: "Teach 2" },
+  { id: "activity", label: "Activity" },
+  { id: "decide2", label: "Decide 2" },
+  { id: "reflect", label: "Reflect" },
+  { id: "summary", label: "Summary" },
+];
+
+function tally(votes: Record<string, "A" | "B">) {
+  const vals = Object.values(votes);
+  return { a: vals.filter((v) => v === "A").length, b: vals.filter((v) => v === "B").length };
+}
+
+function cycleVote(
+  setVotes: Dispatch<SetStateAction<Record<string, "A" | "B">>>,
+  current: Record<string, "A" | "B">,
+  tileId: string,
+) {
+  const cur = current[tileId];
+  const next: "A" | "B" | undefined = cur === undefined ? "A" : cur === "A" ? "B" : undefined;
+  const copy = { ...current };
+  if (next === undefined) delete copy[tileId];
+  else copy[tileId] = next;
+  setVotes(copy);
+}
+
 function Index() {
+  const [beatIndex, setBeatIndex] = useState(0);
+  const [surface, setSurface] = useState<"shared" | "device" | "teacher">("shared");
+  const [votes1, setVotes1] = useState<Record<string, "A" | "B">>({});
+  const [votes2, setVotes2] = useState<Record<string, "A" | "B">>({});
+  const tally1 = tally(votes1);
+  const tally2 = tally(votes2);
+  const branch1: "A" | "B" = tally1.a >= tally1.b ? "A" : "B";
   return (
     <div className="min-h-screen overflow-x-hidden bg-background">
       <Nav />
@@ -127,7 +202,7 @@ function Index() {
             screen, no accounts required.
           </p>
           <a
-            href="#waitlist"
+            href="#demo"
             className="btn-pill btn-primary hover:btn-primary-hover mt-8 px-9 py-5 text-lg md:text-xl"
           >
             See the live demo
@@ -452,6 +527,313 @@ function Index() {
           </div>
         </div>
       </section>
+      {/* Live lesson demo — three surfaces */}
+      <section id="demo" className="bg-ink px-5 py-20 md:px-8 md:py-28">
+        <div className="mx-auto max-w-6xl">
+          <div className="mx-auto max-w-3xl text-center">
+            <p className="font-display text-sm font-bold tracking-widest text-primary-foreground/60 uppercase">
+              Live demo
+            </p>
+            <h2 className="mt-4 text-4xl text-primary-foreground md:text-5xl">
+              Spending, Session 3 — three screens, one lesson
+            </h2>
+            <p className="mt-5 text-lg text-primary-foreground/70">
+              Switch views to see what's actually on each screen at every beat. Content here is a
+              real worked example, matching the shape the backend actually generates.
+            </p>
+          </div>
+
+          <div className="mx-auto mt-10 flex max-w-md justify-center gap-2 rounded-full border border-white/15 bg-white/5 p-1">
+            {(["shared", "device", "teacher"] as const).map((s) => (
+              <button
+                key={s}
+                onClick={() => setSurface(s)}
+                className={`flex-1 rounded-full px-4 py-2 text-sm font-display font-bold transition-colors ${
+                  surface === s ? "bg-accent text-accent-foreground" : "text-primary-foreground/60 hover:text-primary-foreground"
+                }`}
+              >
+                {s === "shared" ? "Shared screen" : s === "device" ? "Your device" : "Teacher dashboard"}
+              </button>
+            ))}
+          </div>
+
+          <div className="mx-auto mt-8 max-w-3xl rounded-[2rem] border border-white/10 bg-card p-8 shadow-soft md:p-10">
+            <p className="font-mono text-xs uppercase tracking-widest text-primary">
+              Beat {beatIndex + 1} of {BEATS.length} · {BEATS[beatIndex].label}
+            </p>
+
+            <div className="mt-6 min-h-[280px]">
+              {/* JOIN */}
+              {BEATS[beatIndex].id === "join" && surface === "shared" && (
+                <div>
+                  <h3 className="text-2xl">Room cps-lincoln-4b is ready</h3>
+                  <p className="mt-3 text-ink-soft">Daily code: <span className="font-mono font-bold text-ink">FY-482</span></p>
+                </div>
+              )}
+              {BEATS[beatIndex].id === "join" && surface === "device" && (
+                <div>
+                  <h3 className="text-xl">Tap your tile</h3>
+                  <div className="mt-5 grid grid-cols-4 gap-2">
+                    {ROSTER.map((k) => (
+                      <div key={k.tileId} className={`rounded-2xl border p-2 text-center font-display text-xs font-bold ${k.spotlight ? "border-accent bg-cream" : "border-border bg-cream/50"}`}>
+                        <div className="text-lg">{k.icon}</div>
+                        {k.name}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+              {BEATS[beatIndex].id === "join" && surface === "teacher" && (
+                <div>
+                  <h3 className="text-xl">Roster ready</h3>
+                  <p className="mt-3 text-ink-soft">8 tiles assigned. Set up once, before Session 1 — never touched again.</p>
+                </div>
+              )}
+
+              {/* RECALL */}
+              {BEATS[beatIndex].id === "recall" && surface === "shared" && (
+                <div className="flex h-full min-h-[200px] items-center justify-center text-center text-ink-soft">
+                  Nothing shows here — recall is private, per kid.
+                </div>
+              )}
+              {BEATS[beatIndex].id === "recall" && surface === "device" && (
+                <div>
+                  <h3 className="text-xl">Last time, in Saving</h3>
+                  <p className="mt-2 text-xs text-ink-soft">Shown for all 8 here so you can see it — in class, each kid sees only their own.</p>
+                  <div className="mt-4 grid grid-cols-2 gap-2">
+                    {ROSTER.map((k) => (
+                      <div key={k.tileId} className="rounded-xl border border-border bg-cream/50 p-3 text-xs">
+                        <b className="font-display">{k.name}</b>
+                        <p className="mt-1 text-ink-soft">{DEMO_SESSION.per_tile_recall[k.tileId]}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+              {BEATS[beatIndex].id === "recall" && surface === "teacher" && (
+                <div>
+                  <h3 className="text-xl">All 8 tiles viewing recall</h3>
+                  <p className="mt-3 text-ink-soft">Private per kid — the dashboard doesn't surface individual recall content, just completion.</p>
+                </div>
+              )}
+
+              {/* STORY / TEACH 1 */}
+              {BEATS[beatIndex].id === "story" && surface === "shared" && (
+                <div>
+                  <div className="flex items-center gap-3">
+                    <span className="grid h-11 w-11 place-items-center rounded-full border-2 border-accent bg-cream text-xl">{SPOTLIGHT.icon}</span>
+                    <div>
+                      <b className="font-display">{SPOTLIGHT.name}</b>
+                      <p className="text-xs text-ink-soft">{SPOTLIGHT.career} · today's spotlight</p>
+                    </div>
+                  </div>
+                  <p className="mt-4 text-ink">{DEMO_SESSION.teach_1_script}</p>
+                </div>
+              )}
+              {(BEATS[beatIndex].id === "story") && surface !== "shared" && (
+                <div className="flex h-full min-h-[200px] items-center justify-center text-center text-ink-soft">
+                  {surface === "device" ? "Follow along on the shared screen." : "Beat 3 of 9 · on pace"}
+                </div>
+              )}
+
+              {/* DECIDE 1 */}
+              {BEATS[beatIndex].id === "decide1" && (
+                <div>
+                  <h3 className="text-xl">Buy it, or pass?</h3>
+                  {surface !== "device" && (
+                    <div className="mt-4 grid grid-cols-2 gap-3">
+                      <div className="rounded-xl border border-border p-3">
+                        <p className="text-sm font-bold text-ink">{DEMO_SESSION.decide_1_labels.buy}</p>
+                        <div className="mt-2 h-2 overflow-hidden rounded-full bg-cream">
+                          <div className="h-full bg-accent" style={{ width: `${(tally1.a / ROSTER.length) * 100}%` }} />
+                        </div>
+                        <p className="mt-1 font-mono text-xs text-ink-soft">{tally1.a} taps</p>
+                      </div>
+                      <div className="rounded-xl border border-border p-3">
+                        <p className="text-sm font-bold text-ink">{DEMO_SESSION.decide_1_labels.pass}</p>
+                        <div className="mt-2 h-2 overflow-hidden rounded-full bg-cream">
+                          <div className="h-full bg-sky" style={{ width: `${(tally1.b / ROSTER.length) * 100}%` }} />
+                        </div>
+                        <p className="mt-1 font-mono text-xs text-ink-soft">{tally1.b} taps</p>
+                      </div>
+                    </div>
+                  )}
+                  {surface === "device" && (
+                    <>
+                      <p className="mt-2 text-xs text-ink-soft">Tap tiles to simulate the class voting.</p>
+                      <div className="mt-4 grid grid-cols-4 gap-2">
+                        {ROSTER.map((k) => (
+                          <div
+                            key={k.tileId}
+                            onClick={() => cycleVote(setVotes1, votes1, k.tileId)}
+                            className={`cursor-pointer rounded-2xl border p-2 text-center font-display text-xs font-bold transition-transform hover:-translate-y-0.5 ${
+                              votes1[k.tileId] === "A" ? "border-accent bg-cream" : votes1[k.tileId] === "B" ? "border-sky bg-sky/20" : "border-border"
+                            }`}
+                          >
+                            <div className="text-lg">{k.icon}</div>
+                            {k.name}
+                          </div>
+                        ))}
+                      </div>
+                    </>
+                  )}
+                  {surface === "teacher" && (
+                    <table className="mt-4 w-full text-left text-xs">
+                      <thead>
+                        <tr className="text-ink-soft"><th className="pb-1">Kid</th><th className="pb-1">Vote</th></tr>
+                      </thead>
+                      <tbody>
+                        {ROSTER.map((k) => (
+                          <tr key={k.tileId} className="border-t border-border">
+                            <td className="py-1">{k.name}</td>
+                            <td className="py-1 font-mono">{votes1[k.tileId] ? (votes1[k.tileId] === "A" ? DEMO_SESSION.decide_1_labels.buy : DEMO_SESSION.decide_1_labels.pass) : "—"}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  )}
+                </div>
+              )}
+
+              {/* TEACH 2 */}
+              {BEATS[beatIndex].id === "teach2" && surface === "shared" && (
+                <div>
+                  <p className="font-mono text-xs text-primary">branch_{branch1 === "A" ? "buy" : "pass"}</p>
+                  <p className="mt-3 text-ink">{branch1 === "A" ? DEMO_SESSION.teach_2_variants.branch_buy : DEMO_SESSION.teach_2_variants.branch_pass}</p>
+                </div>
+              )}
+              {BEATS[beatIndex].id === "teach2" && surface !== "shared" && (
+                <div className="flex h-full min-h-[200px] items-center justify-center text-center text-ink-soft">
+                  {surface === "device" ? "Follow along on the shared screen." : `Branch selected: branch_${branch1 === "A" ? "buy" : "pass"}`}
+                </div>
+              )}
+
+              {/* ACTIVITY (class-interactive, mode: shared) */}
+              {BEATS[beatIndex].id === "activity" && surface === "shared" && (
+                <div>
+                  <p className="font-mono text-xs text-primary">fill_the_structure · mode: shared</p>
+                  <h3 className="mt-2 text-xl">Hala's Food Plan</h3>
+                  <div className="mt-4 flex items-center gap-4">
+                    <div
+                      className="h-16 w-16 shrink-0 rounded-full"
+                      style={{ background: "conic-gradient(hsl(var(--accent)) 0deg 120deg, hsl(var(--sky)) 120deg 240deg, hsl(var(--primary)) 240deg 360deg)" }}
+                    />
+                    <table className="flex-1 text-xs">
+                      <tbody>
+                        <tr><td className="py-0.5">Proteins</td><td className="py-0.5 text-right">$108</td></tr>
+                        <tr><td className="py-0.5">Fruits &amp; veg</td><td className="py-0.5 text-right">?</td></tr>
+                        <tr><td className="py-0.5">Grains</td><td className="py-0.5 text-right">?</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              )}
+              {BEATS[beatIndex].id === "activity" && surface !== "shared" && (
+                <div className="flex h-full min-h-[200px] items-center justify-center text-center text-ink-soft">
+                  {surface === "device" ? "This one's class-interactive — working through it together on the shared screen." : "Class working through Hala's Food Plan together."}
+                </div>
+              )}
+
+              {/* DECIDE 2 */}
+              {BEATS[beatIndex].id === "decide2" && (
+                <div>
+                  <h3 className="text-xl">Cash today, or an IOU?</h3>
+                  {surface !== "device" && (
+                    <div className="mt-4 grid grid-cols-2 gap-3">
+                      <div className="rounded-xl border border-border p-3">
+                        <p className="text-sm font-bold text-ink">{DEMO_SESSION.decide_2_labels.cash}</p>
+                        <div className="mt-2 h-2 overflow-hidden rounded-full bg-cream">
+                          <div className="h-full bg-accent" style={{ width: `${(tally2.a / ROSTER.length) * 100}%` }} />
+                        </div>
+                      </div>
+                      <div className="rounded-xl border border-border p-3">
+                        <p className="text-sm font-bold text-ink">{DEMO_SESSION.decide_2_labels.iou}</p>
+                        <div className="mt-2 h-2 overflow-hidden rounded-full bg-cream">
+                          <div className="h-full bg-sky" style={{ width: `${(tally2.b / ROSTER.length) * 100}%` }} />
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  {surface === "device" && (
+                    <div className="mt-4 grid grid-cols-4 gap-2">
+                      {ROSTER.map((k) => (
+                        <div
+                          key={k.tileId}
+                          onClick={() => cycleVote(setVotes2, votes2, k.tileId)}
+                          className={`cursor-pointer rounded-2xl border p-2 text-center font-display text-xs font-bold transition-transform hover:-translate-y-0.5 ${
+                            votes2[k.tileId] === "A" ? "border-accent bg-cream" : votes2[k.tileId] === "B" ? "border-sky bg-sky/20" : "border-border"
+                          }`}
+                        >
+                          <div className="text-lg">{k.icon}</div>
+                          {k.name}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                  {surface === "teacher" && (
+                    <p className="mt-4 text-ink-soft">{tally2.a + tally2.b} of {ROSTER.length} tiles have voted.</p>
+                  )}
+                </div>
+              )}
+
+              {/* REFLECT */}
+              {BEATS[beatIndex].id === "reflect" && surface === "shared" && (
+                <div>
+                  <h3 className="text-xl">{DEMO_SESSION.reflect_prompt}</h3>
+                  <div className="mt-4 rounded-2xl border border-border bg-cream p-4 font-display text-ink">
+                    "{DEMO_SESSION.sample_reflection}"
+                    <p className="mt-2 font-mono text-xs font-normal text-ink-soft">— {SPOTLIGHT.name} {SPOTLIGHT.icon}</p>
+                  </div>
+                </div>
+              )}
+              {BEATS[beatIndex].id === "reflect" && surface === "device" && (
+                <div>
+                  <h3 className="text-xl">{DEMO_SESSION.reflect_prompt}</h3>
+                  <p className="mt-3 text-ink-soft">Each kid writes their own one-line answer, privately.</p>
+                </div>
+              )}
+              {BEATS[beatIndex].id === "reflect" && surface === "teacher" && (
+                <p className="text-ink-soft">8 / 8 reflections submitted.</p>
+              )}
+
+              {/* SUMMARY */}
+              {BEATS[beatIndex].id === "summary" && (
+                <div>
+                  <h3 className="text-xl">Session 7 of 15 complete</h3>
+                  <p className="mt-3 text-ink-soft">
+                    {surface === "shared" && "Every tap fed straight into the teacher dashboard — no accounts, no typing, no AI in the room."}
+                    {surface === "device" && "No account to log out of. See you next session."}
+                    {surface === "teacher" && "Rolling-buffer trigger fired — session 8 (Saving S1) starts generating now."}
+                  </p>
+                </div>
+              )}
+            </div>
+
+            <div className="mt-8 flex items-center justify-between border-t border-border pt-6">
+              <button
+                onClick={() => setBeatIndex((i) => Math.max(0, i - 1))}
+                disabled={beatIndex === 0}
+                className="rounded-full border border-border px-5 py-2 text-sm font-bold text-ink disabled:opacity-30"
+              >
+                Back
+              </button>
+              <div className="flex gap-1.5">
+                {BEATS.map((b, i) => (
+                  <span key={b.id} className={`h-1.5 w-1.5 rounded-full ${i === beatIndex ? "bg-primary" : "bg-border"}`} />
+                ))}
+              </div>
+              <button
+                onClick={() => setBeatIndex((i) => Math.min(BEATS.length - 1, i + 1))}
+                disabled={beatIndex === BEATS.length - 1}
+                className="btn-pill bg-primary px-5 py-2 text-sm text-primary-foreground disabled:opacity-30"
+              >
+                Next
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Testimonials — left exactly as-is, pending real ones */}
       <section id="parents" className="overflow-hidden bg-cream py-20 md:py-28">
         <div className="mx-auto max-w-3xl px-5 text-center">
