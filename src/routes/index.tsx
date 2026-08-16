@@ -209,6 +209,66 @@ function Index() {
         </div>
       </section>
 
+      {/* Adaptive remediation */}
+      <section id="remediation" className="px-5 py-20 md:px-8 md:py-28">
+        <div className="mx-auto max-w-6xl">
+          <div className="mx-auto max-w-3xl text-center">
+            <p className="font-display text-sm font-bold tracking-widest text-primary uppercase">
+              Adaptive remediation
+            </p>
+            <h2 className="mt-4 text-4xl md:text-5xl">The class doesn't just move on</h2>
+            <p className="mt-5 text-lg text-ink-soft">
+              A knowledge check — a real question with a correct answer, unlike the trade-off taps
+              in decide 1 and decide 2 — gets scored as a class. That aggregate score decides what
+              happens next, before the next session is even generated.
+            </p>
+          </div>
+
+          <div className="mt-14 grid gap-6 md:grid-cols-3">
+            <div className="rounded-3xl border border-border bg-card p-7 shadow-soft">
+              <span className="grid h-11 w-11 place-items-center rounded-full bg-primary font-display text-lg font-extrabold text-primary-foreground">
+                1
+              </span>
+              <h3 className="mt-5 text-xl">Ready</h3>
+              <p className="mt-2 font-mono text-xs text-ink-soft">≥ 80% (placeholder)</p>
+              <p className="mt-2 text-ink-soft">
+                Class advances to new content normally. No special instruction.
+              </p>
+            </div>
+            <div className="rounded-3xl border border-border bg-card p-7 shadow-soft">
+              <span className="grid h-11 w-11 place-items-center rounded-full bg-primary font-display text-lg font-extrabold text-primary-foreground">
+                2
+              </span>
+              <h3 className="mt-5 text-xl">Needs simpler wording</h3>
+              <p className="mt-2 font-mono text-xs text-ink-soft">60–79% (placeholder)</p>
+              <p className="mt-2 text-ink-soft">
+                Still advances on schedule — but that topic's generation prompt is told to simplify
+                language and lean on more concrete explanations. Pacing doesn't change.
+              </p>
+            </div>
+            <div className="rounded-3xl border border-border bg-card p-7 shadow-soft">
+              <span className="grid h-11 w-11 place-items-center rounded-full bg-primary font-display text-lg font-extrabold text-primary-foreground">
+                3
+              </span>
+              <h3 className="mt-5 text-xl">Needs to repeat</h3>
+              <p className="mt-2 font-mono text-xs text-ink-soft">&lt; 60% (placeholder)</p>
+              <p className="mt-2 text-ink-soft">
+                A short reteach pass opens the next session, before its new content — not a whole
+                extra session, so the 15-session count stays fixed.
+              </p>
+            </div>
+          </div>
+
+          <div className="mx-auto mt-10 max-w-2xl rounded-2xl border border-border bg-cream p-6 text-center text-sm text-ink-soft">
+            Repeating a topic also flags it in the class's world-events log — the same log later
+            sessions already read for callbacks. Reinforcement in future, unrelated lessons is a
+            side effect of that flag, not a separate mechanism with its own trigger. The three
+            thresholds above are explicit placeholders: there's no classroom data yet to tune them
+            against.
+          </div>
+        </div>
+      </section>
+
       {/* Real-time decisions band */}
       <section className="bg-ink px-5 py-24 text-center md:px-8">
         <div className="mx-auto max-w-4xl">
