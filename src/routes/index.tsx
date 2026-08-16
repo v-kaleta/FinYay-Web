@@ -257,37 +257,59 @@ function Index() {
             Activity interaction patterns
           </p>
           <h2 className="mt-4 text-center text-4xl md:text-5xl">
-            Four reusable patterns, not custom UI per worksheet
+            A whole workbook's worth of activities, four reusable shapes
           </h2>
           <p className="mx-auto mt-5 max-w-2xl text-center text-lg text-ink-soft">
-            Instant right/wrong feedback is simple comparison against a pre-generated answer key —
-            not live AI, so it doesn't conflict with the no-live-AI rule.
+            Document labeling, cloze stories, vocabulary practice, ledgers, math word problems,
+            circle graphs, time sheets, knowledge checks — every one of these is a real, distinct
+            activity a kid sees. None of them need custom UI built for them: they all collapse into
+            just four reusable interaction patterns underneath.
           </p>
 
           <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             <div className="rounded-3xl border border-border bg-card p-6 shadow-soft">
               <p className="font-mono text-sm font-semibold text-primary">tap_to_place</p>
-              <p className="mt-2 text-sm text-ink-soft">
-                Word bank + blanks + answer key. Labeling, cloze stories, vocabulary practice.
-              </p>
+              <p className="mt-2 text-sm text-ink-soft">Word bank + blanks + answer key.</p>
+              <div className="mt-3 flex flex-wrap gap-1.5">
+                {["Document labeling", "Cloze stories", "Vocabulary practice"].map((t) => (
+                  <span key={t} className="rounded-full border border-border bg-cream px-2.5 py-1 text-xs text-ink-soft">
+                    {t}
+                  </span>
+                ))}
+              </div>
             </div>
             <div className="rounded-3xl border border-border bg-card p-6 shadow-soft">
               <p className="font-mono text-sm font-semibold text-primary">fill_the_structure</p>
-              <p className="mt-2 text-sm text-ink-soft">
-                A layout (table / graph) + fields + answer key. Ledgers, word problems, circle graphs.
-              </p>
+              <p className="mt-2 text-sm text-ink-soft">A layout (table / graph / line) + fields + answer key.</p>
+              <div className="mt-3 flex flex-wrap gap-1.5">
+                {["Ledgers", "Math word problems", "Circle graphs", "Time sheets"].map((t) => (
+                  <span key={t} className="rounded-full border border-border bg-cream px-2.5 py-1 text-xs text-ink-soft">
+                    {t}
+                  </span>
+                ))}
+              </div>
             </div>
             <div className="rounded-3xl border border-border bg-card p-6 shadow-soft">
               <p className="font-mono text-sm font-semibold text-primary">choose_one</p>
-              <p className="mt-2 text-sm text-ink-soft">
-                Options + a correct index, or null for a genuine trade-off. Same as decide 1/2.
-              </p>
+              <p className="mt-2 text-sm text-ink-soft">Options + a correct index, or null for a genuine trade-off.</p>
+              <div className="mt-3 flex flex-wrap gap-1.5">
+                {["Decide 1 / Decide 2", "Knowledge checks"].map((t) => (
+                  <span key={t} className="rounded-full border border-border bg-cream px-2.5 py-1 text-xs text-ink-soft">
+                    {t}
+                  </span>
+                ))}
+              </div>
             </div>
             <div className="rounded-3xl border border-border bg-card p-6 shadow-soft">
               <p className="font-mono text-sm font-semibold text-primary">reflect</p>
-              <p className="mt-2 text-sm text-ink-soft">
-                A prompt, no structured input. Warm-up, wrap-up, real-life reflection.
-              </p>
+              <p className="mt-2 text-sm text-ink-soft">A prompt, no structured input.</p>
+              <div className="mt-3 flex flex-wrap gap-1.5">
+                {["Warm-up", "Wrap-up", "Real-life reflection"].map((t) => (
+                  <span key={t} className="rounded-full border border-border bg-cream px-2.5 py-1 text-xs text-ink-soft">
+                    {t}
+                  </span>
+                ))}
+              </div>
             </div>
           </div>
 
