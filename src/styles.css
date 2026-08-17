@@ -223,3 +223,75 @@
   transform: translateY(2px);
   box-shadow: 0 3px 0 0 oklch(0.46 0.1 182);
 }
+/* FinYay kid-facing brand — Duolingo-style (projected screen + student device only) */
+:root {
+  --fy-cream: oklch(1 0 0);
+  --fy-surface: oklch(0.985 0 0);
+  --fy-green: oklch(0.742 0.219 133.5);
+  --fy-green-ink: oklch(1 0 0);
+  --fy-pink: oklch(0.703 0.155 233);
+  --fy-pink-ink: oklch(1 0 0);
+  --fy-yellow: oklch(0.855 0.176 88);
+  --fy-red: oklch(0.643 0.226 26);
+  --fy-ink: oklch(0.37 0 0);
+  --fy-ink-soft: oklch(0.6 0 0);
+  --fy-line: oklch(0.905 0 0);
+  --fy-radius: 16px;
+
+  /* Teacher dashboard: plain admin neutrals */
+  --td-bg: oklch(0.975 0 0);
+  --td-surface: oklch(1 0 0);
+  --td-border: oklch(0.885 0 0);
+  --td-ink: oklch(0.32 0 0);
+  --td-ink-soft: oklch(0.55 0 0);
+  --td-head: oklch(0.945 0 0);
+}
+
+
+@theme inline {
+  --color-fy-cream: var(--fy-cream);
+  --color-fy-surface: var(--fy-surface);
+  --color-fy-green: var(--fy-green);
+  --color-fy-green-ink: var(--fy-green-ink);
+  --color-fy-pink: var(--fy-pink);
+  --color-fy-pink-ink: var(--fy-pink-ink);
+  --color-fy-yellow: var(--fy-yellow);
+  --color-fy-red: var(--fy-red);
+  --color-fy-ink: var(--fy-ink);
+  --color-fy-ink-soft: var(--fy-ink-soft);
+  --color-fy-line: var(--fy-line);
+  --color-td-bg: var(--td-bg);
+  --color-td-surface: var(--td-surface);
+  --color-td-border: var(--td-border);
+  --color-td-ink: var(--td-ink);
+  --color-td-ink-soft: var(--td-ink-soft);
+  --color-td-head: var(--td-head);
+  --font-display: "Baloo 2", "Nunito", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Nunito", ui-sans-serif, system-ui, sans-serif;
+  --font-admin: ui-sans-serif, system-ui, "Segoe UI", sans-serif;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  body {
+    background-color: var(--fy-cream);
+    color: var(--fy-ink);
+    font-family: var(--font-body);
+    font-weight: 700;
+  }
+
+  .font-display {
+    letter-spacing: -0.01em;
+  }
+}
+
+/* Duolingo-style chunky card: flat fill, hard bottom edge */
+@utility fy-card {
+  border-radius: var(--fy-radius);
+  box-shadow: 0 4px 0 color-mix(in oklab, black 12%, transparent);
+}
+
+
