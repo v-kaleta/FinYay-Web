@@ -126,12 +126,11 @@ const ROSTER: Kid[] = [
   { tileId: "fox", name: "Jordan M.", career: "Realtor", icon: "🏠", iconImg: ICONS.realtor },
   { tileId: "bee", name: "Maya T.", career: "Doctor", icon: "🩺", iconImg: ICONS.doctor },
   { tileId: "turtle", name: "Diego R.", career: "Builder", icon: "🔨", iconImg: ICONS.builder },
-  { tileId: "butterfly", name: "Amara K.", career: "Pet-sitter", icon: "🐕", spotlight: true },
   { tileId: "bear", name: "Liam O.", career: "Firefighter", icon: "🚒", iconImg: ICONS.firefighter },
   { tileId: "owl", name: "Sofia N.", career: "Chef", icon: "👩‍🍳", iconImg: ICONS.chef },
   { tileId: "dolphin", name: "Kai P.", career: "Baker", icon: "🧁", iconImg: ICONS.baker },
   { tileId: "lion", name: "Noah B.", career: "Hair Stylist", icon: "💇", iconImg: ICONS.hairstylist },
-  { tileId: "penguin", name: "Ruby S.", career: "Banker", icon: "🏦", iconImg: ICONS.banker },
+  { tileId: "penguin", name: "Ruby S.", career: "Banker", icon: "🏦", iconImg: ICONS.banker, spotlight: true },
 ];
 const SPOTLIGHT = ROSTER.find((k) => k.spotlight)!;
 
@@ -140,20 +139,20 @@ const DEMO_SESSION = {
     fox: "Last time, you kept saving toward your goal instead of spending.",
     bee: "Last time, you spent a little early — let's see how that played out.",
     turtle: "Last time, you kept saving toward your goal instead of spending.",
-    butterfly: "Last time, you spent a little early on a new leash for your dog-walking business.",
+    penguin: "Last time, you spent a little early on a new pencil case you didn't really need.",
     bear: "Last time, you kept saving toward your goal instead of spending.",
     owl: "Last time, you spent a little early — let's see how that played out.",
     dolphin: "Last time, you kept saving toward your goal instead of spending.",
     lion: "Last time, you spent a little early — let's see how that played out.",
   } as Record<string, string>,
   teach_1_script:
-    "Amara is walking past the pet store when she sees a flashy new leash in the window — way past what she needs, but all her friends are talking about it. Ads and friends can push us to buy things we didn't plan on, even when our old leash works fine.",
-  decide_1_labels: { buy: "Buy the flashy new leash", pass: "Pass and stick with the old one" },
+    "Ruby is scrolling through her phone when a glittery new phone case pops up in an ad — way past what she needs, but all her friends already have one. Ads and friends can push us to buy things we didn't plan on, even when our old case works fine.",
+  decide_1_labels: { buy: "Buy the flashy new phone case", pass: "Pass and stick with the old one" },
   teach_2_variants: {
     branch_buy:
-      "Amara buys the leash. It looks great, but now she's short on cash for the dog treats she actually needed this week — a reminder that impulse buys can crowd out planned ones.",
+      "Ruby buys the case. It looks great, but now she's short on cash for the notebook she actually needed this week — a reminder that impulse buys can crowd out planned ones.",
     branch_pass:
-      "Amara passes on the leash. Her old one still works fine, and she has the cash ready when a real need comes up later in the week.",
+      "Ruby passes on the case. Her old one still works fine, and she has the cash ready when a real need comes up later in the week.",
   },
   decide_2_labels: { cash: "Pay cash today", iou: "Take an IOU, pay next week" },
   reflect_prompt: "Which would you pick, and why — cash today or an IOU next week?",
@@ -609,7 +608,7 @@ function Index() {
               {BEATS[beatIndex].id === "join" && surface === "teacher" && (
                 <div>
                   <h3 className="text-xl">Roster ready</h3>
-                  <p className="mt-3 text-ink-soft">9 tiles assigned. Set up once, before Session 1 — never touched again.</p>
+                  <p className="mt-3 text-ink-soft">8 tiles assigned. Set up once, before Session 1 — never touched again.</p>
                 </div>
               )}
 
@@ -635,7 +634,7 @@ function Index() {
               )}
               {BEATS[beatIndex].id === "recall" && surface === "teacher" && (
                 <div>
-                  <h3 className="text-xl">All 9 tiles viewing recall</h3>
+                  <h3 className="text-xl">All 8 tiles viewing recall</h3>
                   <p className="mt-3 text-ink-soft">Private per kid — the dashboard doesn't surface individual recall content, just completion.</p>
                 </div>
               )}
@@ -820,7 +819,7 @@ function Index() {
                 </div>
               )}
               {BEATS[beatIndex].id === "reflect" && surface === "teacher" && (
-                <p className="text-ink-soft">9 / 9 reflections submitted.</p>
+                <p className="text-ink-soft">8 / 8 reflections submitted.</p>
               )}
 
               {/* SUMMARY */}
