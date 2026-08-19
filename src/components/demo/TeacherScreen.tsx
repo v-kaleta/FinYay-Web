@@ -104,8 +104,8 @@ export function TeacherScreen({ beat }: { beat: number }) {
       return (
         <Shell>
           <Panel title="Pacing">
-            <p>Beat 3 of 9 · on track</p>
-            <p className="mt-1 text-td-ink-soft">Elapsed 6:12 · target 22:00</p>
+            <p>Beat 3 of 15 · on track</p>
+            <p className="mt-1 text-td-ink-soft">Elapsed 4:10 · target 45:00</p>
           </Panel>
           <Panel title="Spotlight">
             <p>Ruby S. (Banker) · rotation 7 of 15</p>
@@ -115,25 +115,81 @@ export function TeacherScreen({ beat }: { beat: number }) {
     case 4:
       return (
         <Shell>
-          <Panel title="Decide 1 — responses">
-            <RosterTable votes={VOTES_1} />
-            <LockButton />
+          <Panel title="What to explain">
+            <p>A budget is a plan made before shopping, not decided in the moment.</p>
+            <p className="mt-1 text-td-ink-soft">
+              Peer pressure can come from ads, friends, even coworkers — anyone who makes a want
+              feel urgent.
+            </p>
+          </Panel>
+          <Panel title="Suggested question">
+            <p>
+              &ldquo;Has an ad or a friend ever made you want something you didn&rsquo;t plan on
+              buying?&rdquo;
+            </p>
           </Panel>
         </Shell>
       );
     case 5:
       return (
         <Shell>
-          <Panel title="Branch">
-            <p>Branch selected: branch_buy</p>
-            <p className="mt-1 text-td-ink-soft">Majority 3–2 · locked 12:04</p>
+          <Panel title="Check results">
+            <p>6 of 8 answered correctly</p>
+            <p className="mt-1 text-td-ink-soft">75% · above the reteach threshold (60%)</p>
+          </Panel>
+          <Panel title="If below 60%">
+            <p className="text-td-ink-soft">
+              Quickly re-explain using today&rsquo;s ad example before moving on. Not needed this
+              session.
+            </p>
           </Panel>
         </Shell>
       );
     case 6:
       return (
         <Shell>
-          <Panel title="Activity monitoring">
+          <Panel title="Timer">
+            <p>60 seconds · pairs assigned automatically</p>
+          </Panel>
+          <Panel title="Suggested debrief">
+            <p>After time&rsquo;s up, ask 2&ndash;3 pairs to share out.</p>
+            <p className="mt-1 text-td-ink-soft">Listen for: was it an ad, a friend, or both?</p>
+          </Panel>
+        </Shell>
+      );
+    case 7:
+      return (
+        <Shell>
+          <Panel title="Decide 1 — responses">
+            <RosterTable votes={VOTES_1} />
+            <LockButton />
+          </Panel>
+        </Shell>
+      );
+    case 8:
+      return (
+        <Shell>
+          <Panel title="Suggested questions">
+            <p>Ask the &ldquo;Buy it&rdquo; voters: what made this feel worth it right now?</p>
+            <p className="mt-1 text-td-ink-soft">
+              Ask the &ldquo;Pass&rdquo; voters: what helped you resist?
+            </p>
+          </Panel>
+        </Shell>
+      );
+    case 9:
+      return (
+        <Shell>
+          <Panel title="Branch">
+            <p>Branch selected: branch_buy</p>
+            <p className="mt-1 text-td-ink-soft">Majority 3–2 · locked 18:20</p>
+          </Panel>
+        </Shell>
+      );
+    case 10:
+      return (
+        <Shell>
+          <Panel title="Activity 1 monitoring">
             <p>Class-interactive · no per-student input expected</p>
             <p className="mt-1 text-td-ink-soft">
               Devices idle. Answer key: Fruits &amp; veg $84 · Grains $48.
@@ -141,7 +197,16 @@ export function TeacherScreen({ beat }: { beat: number }) {
           </Panel>
         </Shell>
       );
-    case 7:
+    case 11:
+      return (
+        <Shell>
+          <Panel title="Activity 2 monitoring">
+            <p>Class-interactive · no per-student input expected</p>
+            <p className="mt-1 text-td-ink-soft">Answer key: &ldquo;overspend.&rdquo;</p>
+          </Panel>
+        </Shell>
+      );
+    case 12:
       return (
         <Shell>
           <Panel title="Decide 2 — responses">
@@ -150,13 +215,27 @@ export function TeacherScreen({ beat }: { beat: number }) {
           </Panel>
         </Shell>
       );
-    case 8:
+    case 13:
       return (
         <Shell>
           <Panel title="Reflections">
             <p>8/8 reflections submitted</p>
             <p className="mt-1 text-td-ink-soft">
               Spotlight response shared to class screen: Ruby S.
+            </p>
+          </Panel>
+        </Shell>
+      );
+    case 14:
+      return (
+        <Shell>
+          <Panel title="Wrap-up script">
+            <p>
+              &ldquo;What&rsquo;s one thing YOU&rsquo;LL do differently next time you see an ad
+              for something you want?&rdquo;
+            </p>
+            <p className="mt-1 text-td-ink-soft">
+              Take 2–3 answers, then close. No need to write anything down.
             </p>
           </Panel>
         </Shell>

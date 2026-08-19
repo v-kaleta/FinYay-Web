@@ -48,9 +48,7 @@ export function StudentScreen({ beat }: { beat: number }) {
     case 2:
       return (
         <Shell>
-          <p className="font-display text-sm font-extrabold text-fy-ink-soft">
-            Just for you, Ruby
-          </p>
+          <p className="font-display text-sm font-extrabold text-fy-ink-soft">Just for you, Ruby</p>
           <div className="fy-card flex flex-1 items-center bg-fy-pink p-6 text-fy-pink-ink">
             <p className="font-display text-2xl leading-snug font-extrabold">
               Last time, you spent a little early on a new pencil case you didn&rsquo;t really
@@ -62,6 +60,31 @@ export function StudentScreen({ beat }: { beat: number }) {
     case 3:
       return <Passive text="Follow along on the shared screen." />;
     case 4:
+      return <Passive text="Follow along on the shared screen." />;
+    case 5:
+      return (
+        <Shell>
+          <p className="font-display text-sm font-extrabold text-fy-ink-soft">Quick check</p>
+          <p className="font-display text-xl font-extrabold">Which of these is peer pressure?</p>
+          <div className="flex flex-col gap-2">
+            <div className="fy-card flex items-center gap-2 border-2 border-fy-green bg-fy-green p-3 font-display font-extrabold text-fy-green-ink">
+              <span>✓</span>A friend says everyone has it, so you want it too
+            </div>
+            <div className="fy-card border-2 border-fy-line p-3 font-display font-extrabold text-fy-ink-soft">
+              You made a shopping list first
+            </div>
+            <div className="fy-card border-2 border-fy-line p-3 font-display font-extrabold text-fy-ink-soft">
+              You saved money every week
+            </div>
+          </div>
+          <p className="mt-auto text-center font-display text-sm font-extrabold text-fy-ink-soft">
+            Locked in — nice work!
+          </p>
+        </Shell>
+      );
+    case 6:
+      return <Passive text="Talk to your partner — 60 seconds!" />;
+    case 7:
       return (
         <Shell>
           <p className="font-display text-lg font-extrabold">Buy it, or pass?</p>
@@ -77,13 +100,19 @@ export function StudentScreen({ beat }: { beat: number }) {
           </p>
         </Shell>
       );
-    case 5:
+    case 8:
+      return <Passive text="Share out when your teacher calls on you." />;
+    case 9:
       return <Passive text="Follow along on the shared screen." />;
-    case 6:
+    case 10:
       return (
         <Passive text="This one's class-interactive — we're working through it together on the shared screen." />
       );
-    case 7:
+    case 11:
+      return (
+        <Passive text="This one's class-interactive — we're working through it together on the shared screen." />
+      );
+    case 12:
       return (
         <Shell>
           <p className="font-display text-lg font-extrabold">Cash today, or an IOU?</p>
@@ -99,7 +128,7 @@ export function StudentScreen({ beat }: { beat: number }) {
           </p>
         </Shell>
       );
-    case 8:
+    case 13:
       return (
         <Shell>
           <p className="font-display text-xl leading-snug font-extrabold">
@@ -116,6 +145,8 @@ export function StudentScreen({ beat }: { beat: number }) {
           </p>
         </Shell>
       );
+    case 14:
+      return <Passive text="Follow along on the shared screen." />;
     default:
       return (
         <Shell>
