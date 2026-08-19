@@ -49,14 +49,30 @@ export function ProjectedScreen({ beat }: { beat: number }) {
               ⭐ Spotlight: Ruby S. · 🏦 Banker
             </span>
           </div>
-          <p className="font-display text-4xl leading-snug font-extrabold">
-            Ruby is scrolling through her phone when a glittery new phone case pops up in an ad
-            — way past what she needs, but all her friends already have one.
-          </p>
-          <p className="fy-card border-2 border-fy-green bg-fy-green px-6 py-5 font-display text-2xl font-extrabold text-fy-green-ink">
-            Ads and friends can push us to buy things we didn&rsquo;t plan on, even when our old
-            case works fine.
-          </p>
+          <div className="space-y-3 font-body text-xl leading-relaxed text-fy-ink">
+            <p className="italic">
+              Ruby was curled up on the couch, scrolling through her phone, when a bright pink
+              case popped up on her screen. SHINY. SPARKLY. EVERYONE HAS ONE!, the ad said.
+            </p>
+            <p className="italic">She sat up. Three of her friends already had that exact case.</p>
+            <p className="italic">
+              Her dad glanced over from the kitchen table. &ldquo;What&rsquo;s got you so serious
+              over there?&rdquo;
+            </p>
+            <p>
+              &ldquo;This case,&rdquo; Ruby said, turning her phone around. &ldquo;Can I get it?
+              It&rsquo;s only twelve dollars.&rdquo;
+            </p>
+            <p>&ldquo;Didn&rsquo;t you just get a new case last month?&rdquo;</p>
+            <p>&ldquo;Yeah, but this one&rsquo;s way cooler. Everyone has it.&rdquo;</p>
+            <p>
+              &ldquo;You know what that&rsquo;s called?&rdquo; her dad said.{" "}
+              <strong className="text-fy-green">Peer pressure.</strong> &ldquo;When an ad — or
+              even just your friends — makes you want something you didn&rsquo;t plan on buying,
+              even though what you already have works just fine.&rdquo;
+            </p>
+            <p className="italic">Ruby wasn&rsquo;t sure what to do.</p>
+          </div>
         </Shell>
       );
     case 4:
@@ -88,13 +104,24 @@ export function ProjectedScreen({ beat }: { beat: number }) {
           <span className="fy-card w-fit bg-fy-pink px-4 py-2 font-display text-lg font-extrabold text-fy-pink-ink">
             The class chose: Buy it
           </span>
-          <p className="font-display text-4xl leading-snug font-extrabold">
-            Ruby buys the case. It looks great, but now she&rsquo;s short on cash for the notebook
-            she actually needed this week.
-          </p>
-          <p className="fy-card border-2 border-fy-green bg-fy-green px-6 py-5 font-display text-2xl font-extrabold text-fy-green-ink">
-            Impulse buys can crowd out planned ones.
-          </p>
+          <div className="space-y-3 font-body text-xl leading-relaxed text-fy-ink">
+            <p className="italic">
+              Ruby decided to get it. Her dad helped her check out — twelve dollars, gone in a few
+              taps. The case really was pretty.
+            </p>
+            <p className="italic">
+              Three days later, her class was collecting money for a field trip. Ruby went to grab
+              the eight dollars she&rsquo;d been saving up. It wasn&rsquo;t there. She&rsquo;d
+              spent it on the case instead.
+            </p>
+            <p>&ldquo;I don&rsquo;t have it,&rdquo; she told her mom. &ldquo;I thought I had enough.&rdquo;</p>
+            <p>
+              Her mom didn&rsquo;t say I told you so. She just said, &ldquo;That&rsquo;s the thing
+              about buying something you didn&rsquo;t plan for —{" "}
+              <strong className="text-fy-green">the money still has to come from
+              somewhere.</strong>&rdquo;
+            </p>
+          </div>
         </Shell>
       );
     case 6:
