@@ -1,4 +1,7 @@
+import { useState } from "react";
 import { ROSTER } from "./lesson";
+
+const RUBY = ROSTER.find((k) => k.name === "Ruby S.")!;
 
 function Shell({ children }: { children: React.ReactNode }) {
   return (
@@ -7,6 +10,106 @@ function Shell({ children }: { children: React.ReactNode }) {
     </div>
   );
 }
+
+type StoryLine = { speaker?: string; text: string };
+
+function SpeakerAvatar({ speaker }: { speaker?: string }) {
+  if (!speaker || speaker === "Ruby") {
+    return (
+      <span className="fy-card grid h-9 w-9 shrink-0 place-items-center overflow-hidden border-2 border-fy-line bg-white">
+        <img src={RUBY.iconImg} alt="" className="h-full w-full object-contain p-1" />
+      </span>
+    );
+  }
+  return (
+    <span className="fy-card grid h-9 w-9 shrink-0 place-items-center border-2 border-fy-line bg-fy-pink font-display text-sm font-extrabold text-fy-pink-ink">
+      {speaker[0]}
+    </span>
+  );
+}
+
+function PaginatedStory({ lines }: { lines: StoryLine[] }) {
+  const [panel, setPanel] = useState(0);
+  const current = lines[panel];
+  const isLast = panel === lines.length - 1;
+
+  return (
+    <div className="flex h-full min-h-[420px] flex-col bg-fy-cream p-6">
+      <div className="mb-5 flex items-center gap-3">
+        <span className="grid h-6 w-6 place-items-center text-fy-ink-soft" aria-hidden="true">
+          ✕
+        </span>
+        <div className="h-2.5 flex-1 overflow-hidden rounded-full bg-fy-line">
+          <div
+            className="h-full rounded-full bg-fy-green transition-all"
+            style={{ width: `${((panel + 1) / lines.length) * 100}%` }}
+          />
+        </div>
+        <span className="font-display text-xs font-extrabold text-fy-ink-soft">
+          {panel + 1}/{lines.length}
+        </span>
+      </div>
+
+      <div className="fy-card flex flex-1 items-center justify-center border-2 border-fy-green bg-fy-green p-8">
+        <img
+          src={RUBY.iconImg}
+          alt="Ruby, this session's spotlight"
+          className="h-32 w-32 object-contain drop-shadow-lg"
+        />
+      </div>
+
+      <div className="mt-5 flex items-start gap-3">
+        <SpeakerAvatar speaker={current.speaker} />
+        <div className="fy-card flex-1 border-2 border-fy-line bg-white px-4 py-3">
+          {current.speaker && (
+            <p className="font-display text-xs font-extrabold text-fy-ink-soft">{current.speaker}</p>
+          )}
+          <p className="font-display text-lg font-extrabold text-fy-ink">{current.text}</p>
+        </div>
+      </div>
+
+      <div className="mt-4 flex justify-center gap-1.5">
+        {lines.map((_, i) => (
+          <span
+            key={i}
+            className={`h-1.5 w-1.5 rounded-full ${i === panel ? "bg-fy-green" : "bg-fy-line"}`}
+          />
+        ))}
+      </div>
+
+      <button
+        type="button"
+        onClick={() => setPanel((p) => Math.min(lines.length - 1, p + 1))}
+        disabled={isLast}
+        className="fy-card mt-4 w-full border-2 border-fy-green bg-fy-green py-3 text-center font-display text-lg font-extrabold text-fy-green-ink disabled:opacity-40"
+      >
+        {isLast ? "End of story" : "→"}
+      </button>
+    </div>
+  );
+}
+
+const STORY_LINES: StoryLine[] = [
+  { text: "Ruby was scrolling through her phone when a bright pink case popped up on her screen." },
+  { text: "SHINY. SPARKLY. EVERYONE HAS ONE! the ad said." },
+  { text: "She sat up — three of her friends already had that exact case." },
+  { speaker: "Dad", text: "What's got you so serious over there?" },
+  { speaker: "Ruby", text: "This case! Can I get it? It's only twelve dollars." },
+  { speaker: "Dad", text: "Didn't you just get a new case last month?" },
+  { speaker: "Ruby", text: "Yeah, but this one's way cooler. Everyone has it." },
+  { speaker: "Dad", text: "You know what that's called? Peer pressure." },
+  { text: "Ruby wasn't sure what to do." },
+];
+
+const BRANCH_BUY_LINES: StoryLine[] = [
+  { text: "Ruby decided to get it. Twelve dollars, gone in a few taps." },
+  { text: "The case really was pretty." },
+  { text: "Three days later, her class collected money for a field trip." },
+  { text: "Ruby went to grab the eight dollars she'd saved. It wasn't there." },
+  { speaker: "Ruby", text: "I don't have it. I thought I had enough." },
+  { speaker: "Mom", text: "That's the thing about buying something you didn't plan for..." },
+  { speaker: "Mom", text: "The money still has to come from somewhere." },
+];
 
 export function ProjectedScreen({ beat }: { beat: number }) {
   switch (beat) {
@@ -42,39 +145,7 @@ export function ProjectedScreen({ beat }: { beat: number }) {
         </Shell>
       );
     case 3:
-      return (
-        <Shell>
-          <div className="flex items-center gap-3">
-            <span className="fy-card border-2 border-fy-pink bg-fy-pink px-4 py-2 font-display text-lg font-extrabold text-fy-pink-ink">
-              ⭐ Spotlight: Ruby S. · 🏦 Banker
-            </span>
-          </div>
-          <div className="space-y-3 font-body text-xl leading-relaxed text-fy-ink">
-            <p className="italic">
-              Ruby was curled up on the couch, scrolling through her phone, when a bright pink
-              case popped up on her screen. SHINY. SPARKLY. EVERYONE HAS ONE!, the ad said.
-            </p>
-            <p className="italic">She sat up. Three of her friends already had that exact case.</p>
-            <p className="italic">
-              Her dad glanced over from the kitchen table. &ldquo;What&rsquo;s got you so serious
-              over there?&rdquo;
-            </p>
-            <p>
-              &ldquo;This case,&rdquo; Ruby said, turning her phone around. &ldquo;Can I get it?
-              It&rsquo;s only twelve dollars.&rdquo;
-            </p>
-            <p>&ldquo;Didn&rsquo;t you just get a new case last month?&rdquo;</p>
-            <p>&ldquo;Yeah, but this one&rsquo;s way cooler. Everyone has it.&rdquo;</p>
-            <p>
-              &ldquo;You know what that&rsquo;s called?&rdquo; her dad said.{" "}
-              <strong className="text-fy-green">Peer pressure.</strong> &ldquo;When an ad — or
-              even just your friends — makes you want something you didn&rsquo;t plan on buying,
-              even though what you already have works just fine.&rdquo;
-            </p>
-            <p className="italic">Ruby wasn&rsquo;t sure what to do.</p>
-          </div>
-        </Shell>
-      );
+      return <PaginatedStory key={3} lines={STORY_LINES} />;
     case 4:
       return (
         <Shell>
@@ -99,31 +170,7 @@ export function ProjectedScreen({ beat }: { beat: number }) {
         </Shell>
       );
     case 5:
-      return (
-        <Shell>
-          <span className="fy-card w-fit bg-fy-pink px-4 py-2 font-display text-lg font-extrabold text-fy-pink-ink">
-            The class chose: Buy it
-          </span>
-          <div className="space-y-3 font-body text-xl leading-relaxed text-fy-ink">
-            <p className="italic">
-              Ruby decided to get it. Her dad helped her check out — twelve dollars, gone in a few
-              taps. The case really was pretty.
-            </p>
-            <p className="italic">
-              Three days later, her class was collecting money for a field trip. Ruby went to grab
-              the eight dollars she&rsquo;d been saving up. It wasn&rsquo;t there. She&rsquo;d
-              spent it on the case instead.
-            </p>
-            <p>&ldquo;I don&rsquo;t have it,&rdquo; she told her mom. &ldquo;I thought I had enough.&rdquo;</p>
-            <p>
-              Her mom didn&rsquo;t say I told you so. She just said, &ldquo;That&rsquo;s the thing
-              about buying something you didn&rsquo;t plan for —{" "}
-              <strong className="text-fy-green">the money still has to come from
-              somewhere.</strong>&rdquo;
-            </p>
-          </div>
-        </Shell>
-      );
+      return <PaginatedStory key={5} lines={BRANCH_BUY_LINES} />;
     case 6:
       return (
         <Shell>
