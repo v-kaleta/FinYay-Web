@@ -1,9 +1,27 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BEATS } from "@/components/demo/lesson";
 import { ProjectedScreen } from "@/components/demo/ProjectedScreen";
 import { StudentScreen } from "@/components/demo/StudentScreen";
 import { TeacherScreen } from "@/components/demo/TeacherScreen";
+
+// Which beats carry a timer, and how long each one runs.
+const TIMER_DURATIONS: Record<number, number> = {
+  6: 60, // Turn & talk
+  7: 45, // Decide 1 auto-lock
+  10: 300, // Activity 1 work time
+  11: 240, // Activity 2 work time
+  12: 45, // Decide 2 auto-lock
+};
+
+export type TimerState = {
+  remaining: number;
+  running: boolean;
+  duration: number;
+  onToggle: () => void;
+  onReset: () => void;
+  onExtend: () => void;
+};
 
 export const Route = createFileRoute("/demo")({
   head: () => ({
@@ -53,6 +71,38 @@ function Index() {
   const [beat, setBeat] = useState(1);
   const current = BEATS[beat - 1] ?? BEATS[0];
   const progress = (beat / BEATS.length) * 100;
+
+  const duration = TIMER_DURATIONS[beat] ?? null;
+  const [remaining, setRemaining] = useState(duration ?? 0);
+  const [running, setRunning] = useState(false);
+
+  // Reset the timer fresh every time the beat changes.
+  useEffect(() => {
+    setRemaining(TIMER_DURATIONS[beat] ?? 0);
+    setRunning(false);
+  }, [beat]);
+
+  // The actual countdown, shared by both the teacher's controls and the projected clock.
+  useEffect(() => {
+    if (!running || remaining <= 0) return;
+    const id = setTimeout(() => setRemaining((r) => Math.max(0, r - 1)), 1000);
+    return () => clearTimeout(id);
+  }, [running, remaining]);
+
+  const timer: TimerState | null =
+    duration != null
+      ? {
+          remaining,
+          running,
+          duration,
+          onToggle: () => setRunning((r) => !r),
+          onReset: () => {
+            setRunning(false);
+            setRemaining(duration);
+          },
+          onExtend: () => setRemaining((r) => r + 30),
+        }
+      : null;
 
   return (
     <main className="min-h-screen bg-fy-cream pb-12">
@@ -135,13 +185,13 @@ function Index() {
 
       <div className="mx-auto mt-6 grid max-w-6xl gap-6 px-5 md:px-10 lg:grid-cols-[1.35fr_0.8fr_1.1fr]">
         <ScreenFrame label="Projected screen" sub="Whole class · read from 20 feet · shared only">
-          <ProjectedScreen beat={beat} />
+          <ProjectedScreen beat={beat} timer={timer} />
         </ScreenFrame>
         <ScreenFrame label="Student device — Ruby S." sub="One kid · 12 inches · one thing at a time">
           <StudentScreen beat={beat} />
         </ScreenFrame>
         <ScreenFrame label="Teacher dashboard" sub="One adult, working · dense detail · real controls">
-          <TeacherScreen beat={beat} />
+          <TeacherScreen beat={beat} timer={timer} />
         </ScreenFrame>
       </div>
 
