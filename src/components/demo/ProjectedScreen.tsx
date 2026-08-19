@@ -181,9 +181,14 @@ export function ProjectedScreen({ beat }: { beat: number }) {
             {ROSTER.map((k) => (
               <span
                 key={k.name}
-                className="fy-card border-2 border-fy-pink bg-fy-pink px-3 py-2 font-display text-sm font-extrabold text-fy-pink-ink"
+                className="fy-card flex items-center gap-1.5 border-2 border-fy-pink bg-fy-pink px-3 py-2 font-display text-sm font-extrabold text-fy-pink-ink"
               >
-                {k.icon} {k.name}
+                {k.iconImg ? (
+                  <img src={k.iconImg} alt="" className="h-5 w-5 object-contain" />
+                ) : (
+                  <span>{k.icon}</span>
+                )}
+                {k.name}
               </span>
             ))}
           </div>

@@ -32,7 +32,13 @@ export function StudentScreen({ beat }: { beat: number }) {
                 type="button"
                 className="fy-card border-2 border-fy-green bg-fy-green px-3 py-4 text-left font-display text-base font-extrabold text-fy-green-ink"
               >
-                <span className="block text-2xl">{k.icon}</span>
+                <span className="mb-1 block h-10 w-10">
+                  {k.iconImg ? (
+                    <img src={k.iconImg} alt="" className="h-full w-full object-contain" />
+                  ) : (
+                    <span className="text-2xl">{k.icon}</span>
+                  )}
+                </span>
                 {k.name}
               </button>
             ))}
